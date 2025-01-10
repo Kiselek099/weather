@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_theme"
+    tools:context=".WeatherActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/mainTB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        app:titleTextColor="@color/white"
+        app:subtitleTextColor="@color/white">
+    </androidx.appcompat.widget.Toolbar>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cityTV"
+        android:hint="@string/city"
+        android:textStyle="italic"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+    </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tempTV"
+        android:gravity="center"
+        android:hint="Температура °C"
+        android:textStyle="italic"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+    </TextView>
+    <ImageView
+        android:id="@+id/weatherIV"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center">
+    </ImageView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/windTV"
+        android:hint="Скорость ветра"
+        android:textStyle="italic"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+    </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vlazhTV"
+        android:hint="Влажность"
+        android:textStyle="italic"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+    </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/maxminTV"
+        android:hint="Макс t°C/ Мин t°C"
+        android:textStyle="italic"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+    </TextView>
+    <EditText
+        android:id="@+id/cityET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textColor="@color/white"
+        android:hint="Введите город"
+        android:layout_gravity="center"
+        android:padding="12dp"
+        android:background="@drawable/rounded_text"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/getCityBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Получить погоду по введенному городу"
+            android:background="@drawable/rounded_text"
+            android:textColor="@color/white"
+            android:layout_weight="1"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/getGpsBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Получить погоду по местонахождению"
+            android:background="@drawable/rounded_text"
+            android:textColor="@color/white"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+
+</LinearLayout>

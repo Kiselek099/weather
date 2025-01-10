@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="api_key">dcda92b43510741f2b45abc743ac92b6</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="start">Узнать прогноз погоды</string>
+    <string name="city">Город</string>
+</resources>
