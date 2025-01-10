@@ -39,6 +39,7 @@ class WeatherActivity : AppCompatActivity() {
     lateinit var getGpsBTN: AppCompatButton
     lateinit var weatherIV: ImageView
     lateinit var mainTB: Toolbar
+    private var isLocationRequest = false
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val LOCATION_PERMISSION_REQUEST_CODE = 1001
     @SuppressLint("MissingInflatedId", "ResourceAsColor")
@@ -68,10 +69,12 @@ class WeatherActivity : AppCompatActivity() {
             }
             cityTV.text = cityET.text
             cityET.text.clear()
+            isLocationRequest = false
             getWeatherByCity(cityTV.text.toString())
         }
         getGpsBTN.setOnClickListener {
-        getLocationAndWeather()
+            isLocationRequest = true
+            getLocationAndWeather()
         }
 
     }
@@ -95,7 +98,11 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
     private fun getWeatherByCity(city: String) {
+        if (isLocationRequest) return
         GlobalScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
+                clearWeatherStroke()
+            }
             val response = try {
                 RetrofitInstance.api.getCurrentWeather(
                     city,
@@ -124,6 +131,7 @@ class WeatherActivity : AppCompatActivity() {
             if (response.isSuccessful && response.body() != null) {
                 withContext(Dispatchers.Main) {
                     val data = response.body()
+                    cityTV.text="${data!!.name}"
                     tempTV.text = "${"%.0f".format(data!!.main.temp)}°C"
                     windTV.text = "Ветер ${"%.1f".format(data!!.wind.speed)} м/с"
                     vlazhTV.text = "Влажность ${data!!.main.humidity} %"
@@ -140,6 +148,7 @@ class WeatherActivity : AppCompatActivity() {
                             .into(it)
                     }
                 }
+                isLocationRequest = false
             } else {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
@@ -153,6 +162,7 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     private fun getWeatherByLocation(lat: Double, lon: Double) {
+        if (!isLocationRequest) return
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
@@ -167,7 +177,6 @@ class WeatherActivity : AppCompatActivity() {
                 Toast.makeText(this, "Ошибка получения местоположения: ${it.message}", Toast.LENGTH_SHORT).show()
             }
         } else {
-            // Если разрешение не получено
             Toast.makeText(this, "Необходимо разрешение для доступа к местоположению", Toast.LENGTH_SHORT).show()
         }
         GlobalScope.launch(Dispatchers.IO) {
@@ -205,6 +214,7 @@ class WeatherActivity : AppCompatActivity() {
                         .error(R.drawable.ic_error)
                         .into(weatherIV)
                 }
+                isLocationRequest = false
             } else {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(applicationContext, "Ошибка сервера: ${response.message()}", Toast.LENGTH_SHORT).show()
